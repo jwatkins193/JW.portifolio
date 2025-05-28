@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Advanced Automation Script</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #f4f4f9;
+      margin: 0;
+      padding: 40px;
+      color: #333;
+    }
+    .container {
+      max-width: 800px;
+      margin: auto;
+      background: white;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    }
+    h1 {
+      margin-bottom: 10px;
+    }
+    button {
+      padding: 10px;
+      margin: 10px 0;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      font-size: 1rem;
+      background-color: #2563eb;
+      color: white;
+      border: none;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+    button:hover {
+      background-color: #1e40af;
+    }
+    pre {
+      background: #111;
+      color: #0f0;
+      padding: 20px;
+      border-radius: 8px;
+      overflow-x: auto;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Random User Generator</h1>
+    <p>Click the button to generate a completely random user report.</p>
+    <button onclick="runAutomation()">Generate User</button>
+    <pre id="report"></pre>
+  </div>
+
+  <script>
+    function getRandomInt(max) {
+      return Math.floor(Math.random() * max);
+    }
+
+    async function runAutomation() {
+      const reportBox = document.getElementById('report');
+      try {
+        const res = await fetch('https://jsonplaceholder.typicode.com/users');
+        const users = await res.json();
+        const randomUser = users[getRandomInt(users.length)];
+
+        let report = `Random User Report\nGenerated on: ${new Date().toLocaleString()}\n`;
+        report += `========================================\n`;
+        report += `\nName: ${randomUser.name}\nEmail: ${randomUser.email}\nPhone: ${randomUser.phone}\nCity: ${randomUser.address.city}\nCompany: ${randomUser.company.name}\nWebsite: ${randomUser.website}\n`;
+        reportBox.textContent = report;
+      } catch (error) {
+        reportBox.textContent = 'Failed to fetch data: ' + error;
+      }
+    }
+  </script>
+</body>
+</html>
