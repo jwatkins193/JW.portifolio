@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Jordan Watkins | Minimalist Portfolio</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+    }
+    body {
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+      background: #fff;
+      color: #111;
+      overflow-x: hidden;
+      scroll-behavior: smooth;
+      min-height: 100vh;
+      position: relative;
+    }
+    a {
+      color: #2563eb;
+      text-decoration: none;
+      position: relative;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    a::after {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 2px;
+      bottom: -3px;
+      left: 0;
+      background-color: #2563eb;
+      transition: width 0.3s ease;
+    }
+    a:hover::after {
+      width: 100%;
+    }
+
+    main {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 60px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 80px;
+      position: relative;
+      z-index: 10; /* ensure content is above doodles */
+    }
+
+    header {
+      text-align: center;
+      position: relative;
+      padding-top: 40px;
+      padding-bottom: 20px;
+    }
+    header h1 {
+      font-size: 3.5rem;
+      font-weight: 900;
+      letter-spacing: -0.05em;
+      margin-bottom: 12px;
+      color: #111;
+      opacity: 0;
+      transform: translateY(40px);
+      animation: fadeSlideIn 0.8s forwards ease-out;
+      animation-delay: 0.2s;
+    }
+    header p {
+      font-weight: 500;
+      color: #444;
+      font-size: 1.15rem;
+      max-width: 420px;
+      margin: 0 auto;
+      opacity: 0;
+      transform: translateY(40px);
+      animation: fadeSlideIn 0.8s forwards ease-out;
+      animation-delay: 0.5s;
+    }
+
+    section {
+      opacity: 0;
+      transform: translateY(40px);
+      animation: fadeSlideIn 0.8s forwards ease-out;
+    }
+    section:nth-child(2) { animation-delay: 0.7s; }
+    section:nth-child(3) { animation-delay: 0.9s; }
+    section:nth-child(4) { animation-delay: 1.1s; }
+
+    h2 {
+      font-weight: 700;
+      font-size: 1.9rem;
+      border-left: 4px solid #2563eb;
+      padding-left: 12px;
+      margin-bottom: 18px;
+      color: #111;
+    }
+
+    #about p {
+      font-size: 1.1rem;
+      color: #333;
+      line-height: 1.6;
+    }
+
+    #skills ul {
+      list-style: none;
+      padding-left: 0;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+    }
+    #skills li {
+      background: #e0e7ff;
+      color: #2563eb;
+      padding: 8px 16px;
+      border-radius: 12px;
+      font-weight: 600;
+      font-size: 0.95rem;
+      user-select: none;
+      transition: background-color 0.3s ease, color 0.3s ease;
+      cursor: default;
+    }
+    #skills li:hover {
+      background: #2563eb;
+      color: white;
+      transform: scale(1.1);
+    }
+
+    #projects {
+      display: flex;
+      flex-direction: column;
+      gap: 28px;
+    }
+    .project {
+      background: #f9f9ff;
+      border-left: 4px solid #2563eb;
+      padding: 18px 20px;
+      border-radius: 8px;
+      box-shadow: 0 3px 8px rgb(37 99 235 / 0.1);
+      transition: box-shadow 0.3s ease, transform 0.3s ease;
+      cursor: pointer;
+    }
+    .project:hover {
+      box-shadow: 0 10px 25px rgb(37 99 235 / 0.2);
+      transform: translateY(-4px);
+    }
+    .project h3 {
+      margin: 0 0 8px;
+      color: #1e293b;
+      font-weight: 700;
+      font-size: 1.25rem;
+    }
+    .project p {
+      margin: 0;
+      color: #4b5563;
+      font-size: 1rem;
+      line-height: 1.5;
+    }
+
+    @keyframes fadeSlideIn {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Doodles container left and right */
+    .doodles-left, .doodles-right {
+      position: fixed;
+      top: 50%;
+      transform: translateY(-50%);
+      display: flex;
+      flex-direction: column;
+      gap: 40px;
+      pointer-events: none;
+      z-index: 0;
+    }
+    .doodles-left {
+      left: 20px;
+      align-items: flex-start;
+    }
+    .doodles-right {
+      right: 20px;
+      align-items: flex-end;
+    }
+
+    /* Doodles style */
+    .doodle {
+      stroke: #111; /* black */
+      stroke-width: 2;
+      fill: transparent;
+      animation: float 3s ease-in-out infinite alternate;
+    }
+    .doodles-left .doodle:nth-child(1) {
+      width: 60px;
+      height: 60px;
+      animation-delay: 0s;
+    }
+    .doodles-left .doodle:nth-child(2) {
+      width: 45px;
+      height: 45px;
+      animation-delay: 1.2s;
+    }
+    .doodles-left .doodle:nth-child(3) {
+      width: 70px;
+      height: 70px;
+      animation-delay: 2.5s;
+    }
+
+    .doodles-right .doodle:nth-child(1) {
+      width: 55px;
+      height: 55px;
+      animation-delay: 0.5s;
+    }
+    .doodles-right .doodle:nth-child(2) {
+      width: 50px;
+      height: 50px;
+      animation-delay: 1.7s;
+    }
+    .doodles-right .doodle:nth-child(3) {
+      width: 65px;
+      height: 65px;
+      animation-delay: 2.9s;
+    }
+
+    @keyframes float {
+      0% {
+        transform: translateY(0);
+        opacity: 0.6;
+      }
+      100% {
+        transform: translateY(-15px);
+        opacity: 1;
+      }
+    }
+
+    @media (max-width: 600px) {
+      main {
+        padding: 40px 15px;
+      }
+      header h1 {
+        font-size: 2.8rem;
+      }
+      .doodles-left,
+      .doodles-right {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="doodles-left" aria-hidden="true">
+    <!-- Left side doodles: Circle, Rounded square, Wave -->
+    <svg class="doodle" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" >
+      <circle cx="50" cy="50" r="40" />
+    </svg>
+    <svg class="doodle" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" >
+      <rect x="20" y="20" width="60" height="60" rx="15" ry="15" />
+    </svg>
+    <svg class="doodle" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" >
+      <path d="M20 80 Q50 10 80 80" fill="none" />
+    </svg>
+  </div>
+
+  <div class="doodles-right" aria-hidden="true">
+    <!-- Right side doodles: Triangle, Zigzag, Spiral -->
+    <svg class="doodle" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" >
+      <polygon points="50,10 90,90 10,90" />
+    </svg>
+    <svg class="doodle" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" >
+      <polyline points="10,80 30,40 50,80 70,40 90,80" fill="none" />
+    </svg>
+    <svg class="doodle" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" >
+      <path d="M50 50 m-30 0 a30 30 0 1 1 60 0" fill="none" />
+    </svg>
+  </div>
+
+  <main>
+    <header>
+      <h1>Jordan Watkins</h1>
+      <p>Professional developer specializing in clean code, elegant solutions, and interactive experiences.</p>
+    </header>
+
+    <section id="about">
+      <h2>About Me</h2>
+      <p>
+        I am passionate about creating efficient and scalable scripts and applications. With a background in Applied Computer Science, I enjoy turning complex problems into simple, maintainable code that delivers real value.
+      </p>
+    </section>
+
+    <section id="skills">
+      <h2>Skills</h2>
+      <ul>
+        <li>Python</li>
+        <li>JavaScript</li>
+        <li>React</li>
+        <li>Node.js</li>
+        <li>REST APIs</li>
+        <li>SQL & Databases</li>
+      </ul>
+    </section>
+
+    <section id="projects">
+      <h2>Projects</h2>
+      <article class="project" tabindex="0" role="link" onclick="window.open('projects/custom-automation.html', '_blank')">
+        <h3>Custom Automation Script</h3>
+        <p>A Python tool automating data extraction and report generation, saving 10+ hours weekly for a client.</p>
+      </article>
+      <article class="project" tabindex="0" role="link" onclick="window.open('projects/react-dashboard.html', '_blank')">
+        <h3>Interactive React Dashboard</h3>
+        <p>Built a dynamic dashboard with live data feeds and real-time charts for business insights.</p>
+      </article>
+      <article class="project" tabindex="0" role="link" onclick="window.open('projects/api-integration.html', '_blank')">
+        <h3>API Integration Platform</h3>
+        <p>Developed a REST API integration service connecting various enterprise systems efficiently.</p>
+      </article>
+    </section>
+  </main>
+
+</body>
+</html>
