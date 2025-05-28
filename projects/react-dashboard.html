@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Interactive Dashboard</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+      background: #f4f6fa;
+      color: #111;
+    }
+    .dashboard {
+      max-width: 960px;
+      margin: 40px auto;
+      padding: 20px;
+    }
+    h1 {
+      text-align: center;
+      font-size: 2.5rem;
+      margin-bottom: 40px;
+    }
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 24px;
+    }
+    .card {
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+      padding: 20px;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 12px 24px rgba(0, 0, 0, 0.08);
+    }
+    canvas {
+      width: 100% !important;
+      height: 240px !important;
+    }
+  </style>
+</head>
+<body>
+  <div class="dashboard">
+    <h1>Interactive Dashboard</h1>
+    <div class="cards">
+      <div class="card">
+        <h3>Usage Data</h3>
+        <canvas id="chart1"></canvas>
+      </div>
+      <div class="card">
+        <h3>Activity Trend</h3>
+        <canvas id="chart2"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Generate mock data
+    const labels = Array.from({ length: 7 }, (_, i) => `Day ${i + 1}`);
+    const data1 = labels.map(() => Math.floor(Math.random() * 100));
+    const data2 = labels.map(() => Math.floor(Math.random() * 80 + 20));
+
+    // Chart 1
+    new Chart(document.getElementById('chart1'), {
+      type: 'line',
+      data: {
+        labels: labels,
+        datasets: [{
+          label: 'Users',
+          data: data1,
+          borderColor: '#2563eb',
+          backgroundColor: 'rgba(37, 99, 235, 0.2)',
+          tension: 0.4,
+          fill: true,
+        }]
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          legend: { display: false }
+        }
+      }
+    });
+
+    // Chart 2
+    new Chart(document.getElementById('chart2'), {
+      type: 'bar',
+      data: {
+        labels: labels,
+        datasets: [{
+          label: 'Activity',
+          data: data2,
+          backgroundColor: '#4ade80'
+        }]
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          legend: { display: false }
+        }
+      }
+    });
+  </script>
+</body>
+</html>
